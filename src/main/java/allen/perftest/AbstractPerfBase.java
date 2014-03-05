@@ -23,4 +23,8 @@ abstract public class AbstractPerfBase implements PerfBase {
         }
     }
 
+    @Override
+    public Object[] extraPara() {
+        return null;
+    }
 }

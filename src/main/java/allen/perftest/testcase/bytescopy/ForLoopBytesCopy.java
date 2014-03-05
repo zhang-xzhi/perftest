@@ -21,12 +21,12 @@ public class ForLoopBytesCopy extends AbstractPerfBase {
     }
 
     @Override
-    public String name() {
-        return super.name() + "_data size = " + size;
+    public String des() {
+        return "for loop bytes copy. size";
     }
 
     @Override
-    public String des() {
-        return "for loop bytes copy.";
+    public Object[] extraPara() {
+        return new Object[] { size };
     }
 }

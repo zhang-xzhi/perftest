@@ -19,12 +19,12 @@ public class SystemArrayCopy extends AbstractPerfBase {
     }
 
     @Override
-    public String name() {
-        return super.name() + "_data size = " + size;
+    public String des() {
+        return "System.arraycopy(). size";
     }
 
     @Override
-    public String des() {
-        return "System.arraycopy()";
+    public Object[] extraPara() {
+        return new Object[] { size };
     }
 }

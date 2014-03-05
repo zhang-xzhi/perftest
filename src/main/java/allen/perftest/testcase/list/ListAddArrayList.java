@@ -16,12 +16,12 @@ public class ListAddArrayList extends ListAdd {
     }
 
     @Override
-    public String name() {
-        return super.name() + "_initialCapacity = " + initialCapacity;
+    public String des() {
+        return "arrayList.add(). initialCapacity";
     }
 
     @Override
-    public String des() {
-        return "arrayList.add()";
+    public Object[] extraPara() {
+        return new Object[] { initialCapacity };
     }
 }

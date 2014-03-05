@@ -7,6 +7,8 @@ public interface PerfBase {
     public void run();
 
     public String des();
-    
+
     public void reset();
+
+    public Object[] extraPara();
 }

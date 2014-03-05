@@ -15,6 +15,7 @@ import allen.perftest.testcase.Empty;
 import allen.perftest.testcase.NewDate;
 import allen.perftest.testcase.TimeMeasurementNanoTime;
 import allen.perftest.testcase.bytescopy.BytesCopyFactory;
+import allen.perftest.testcase.cache.CacheFactory;
 import allen.perftest.testcase.exception.ExceptionFactory;
 import allen.perftest.testcase.list.ListFactory;
 import allen.perftest.testcase.reflect.ReflectionFactory;
@@ -55,6 +56,7 @@ public class PerfBaseHarness {
         list.add(new CreateObject());
         list.add(new CreateException());
 
+        list.addAll(new CacheFactory().getPerfBase());
         list.addAll(new BytesCopyFactory().getPerfBase());
         list.addAll(new ReflectionFactory().getPerfBase());
         list.addAll(new ExceptionFactory().getPerfBase());
@@ -101,7 +103,8 @@ public class PerfBaseHarness {
                     result.des = perfBase.des();
                     result.loop = c.curLoop * Control.LoopInOneTest;
                     result.name = perfBase.name();
-
+                    result.perfTestCaseClass = perfBase.getClass();
+                    result.extraPara = perfBase.extraPara();
                     resultList.add(result);
                     break;
                 }
