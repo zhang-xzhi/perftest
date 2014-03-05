@@ -2,7 +2,7 @@ package allen.perftest.testcase.list;
 
 import allen.perftest.AbstractPerfBaseFactory;
 
-public class ListAddFactory extends AbstractPerfBaseFactory {
+public class ListFactory extends AbstractPerfBaseFactory {
 
     @Override
     public void fillPerfBase() {

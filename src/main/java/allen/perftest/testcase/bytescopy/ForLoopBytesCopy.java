@@ -1,13 +1,13 @@
-package allen.perftest.testcase;
+package allen.perftest.testcase.bytescopy;
 
 import allen.perftest.AbstractPerfBase;
 
-public class SystemArrayCopy extends AbstractPerfBase {
+public class ForLoopBytesCopy extends AbstractPerfBase {
     int    size;
     byte[] data;
     byte[] des;
 
-    public SystemArrayCopy(int size) {
+    public ForLoopBytesCopy(int size) {
         this.size = size;
         data = new byte[size];
         des = new byte[size];
@@ -15,7 +15,9 @@ public class SystemArrayCopy extends AbstractPerfBase {
 
     @Override
     public void run() {
-        System.arraycopy(data, 0, des, 0, data.length);
+        for (int i = 0; i < des.length; i++) {
+            des[i] = data[i];
+        }
     }
 
     @Override
@@ -25,6 +27,6 @@ public class SystemArrayCopy extends AbstractPerfBase {
 
     @Override
     public String des() {
-        return "System.arraycopy()";
+        return "for loop bytes copy.";
     }
 }

@@ -13,12 +13,10 @@ import allen.perftest.testcase.CreateObject;
 import allen.perftest.testcase.TimeMeasurementCurrentTimeMillis;
 import allen.perftest.testcase.Empty;
 import allen.perftest.testcase.NewDate;
-import allen.perftest.testcase.SystemArrayCopyFactory;
 import allen.perftest.testcase.TimeMeasurementNanoTime;
-import allen.perftest.testcase.exception.ExceptionOnlyCreateException;
-import allen.perftest.testcase.exception.ExceptionThrowAndCatch;
-import allen.perftest.testcase.exception.ExceptionWithTryCatch;
-import allen.perftest.testcase.list.ListAddFactory;
+import allen.perftest.testcase.bytescopy.BytesCopyFactory;
+import allen.perftest.testcase.exception.ExceptionFactory;
+import allen.perftest.testcase.list.ListFactory;
 import allen.perftest.testcase.reflect.ReflectionFactory;
 
 public class PerfBaseHarness {
@@ -49,7 +47,7 @@ public class PerfBaseHarness {
     private static List<PerfBase> init() {
         List<PerfBase> list = new ArrayList<PerfBase>();
         list.add(new Empty());
-        list.addAll(new SystemArrayCopyFactory().getPerfBase());
+
         list.add(new NewDate());
         list.add(new TimeMeasurementCurrentTimeMillis());
         list.add(new TimeMeasurementNanoTime());
@@ -57,13 +55,10 @@ public class PerfBaseHarness {
         list.add(new CreateObject());
         list.add(new CreateException());
 
+        list.addAll(new BytesCopyFactory().getPerfBase());
         list.addAll(new ReflectionFactory().getPerfBase());
-
-        list.add(new ExceptionThrowAndCatch());
-        list.add(new ExceptionWithTryCatch());
-        list.add(new ExceptionOnlyCreateException());
-
-        list.addAll(new ListAddFactory().getPerfBase());
+        list.addAll(new ExceptionFactory().getPerfBase());
+        list.addAll(new ListFactory().getPerfBase());
 
         return list;
 
