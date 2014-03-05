@@ -18,18 +18,15 @@ import allen.perftest.testcase.exception.ExceptionOnlyCreateException;
 import allen.perftest.testcase.exception.ExceptionThrowAndCatch;
 import allen.perftest.testcase.exception.ExceptionWithTryCatch;
 import allen.perftest.testcase.list.ListAddFactory;
-import allen.perftest.testcase.reflect.ReflectionField;
-import allen.perftest.testcase.reflect.ReflectionFieldInvoke;
-import allen.perftest.testcase.reflect.ReflectionMethod;
-import allen.perftest.testcase.reflect.ReflectionMethodInvoke;
+import allen.perftest.testcase.reflect.ReflectionFactory;
 
 public class PerfBaseHarness {
 
     private static class Control {
 
-        final static int    loopMax       = 10000000;
-        final static double gapLimit      = 0.2D;
-        final static int    loopInOneTest = 5;
+        final static int    LoopMaxLimit  = 10000000;
+        final static double DeltaLimit    = 0.2D;
+        final static int    LoopInOneTest = 5;
 
         int                 curLoop;
         int                 loopStep;
@@ -44,7 +41,7 @@ public class PerfBaseHarness {
         }
 
         boolean canStep() {
-            return curLoop < loopMax;
+            return curLoop < LoopMaxLimit;
         }
     }
 
@@ -59,10 +56,8 @@ public class PerfBaseHarness {
         list.add(new CreateObject());
         list.add(new CreateException());
 
-        list.add(new ReflectionField());
-        list.add(new ReflectionFieldInvoke());
-        list.add(new ReflectionMethod());
-        list.add(new ReflectionMethodInvoke());
+        list.addAll(new ReflectionFactory().getPerfBase());
+
         list.add(new ExceptionThrowAndCatch());
         list.add(new ExceptionWithTryCatch());
         list.add(new ExceptionOnlyCreateException());
@@ -85,9 +80,9 @@ public class PerfBaseHarness {
             c.reset();
             while (c.canStep()) {
 
-                long[] avgs = new long[Control.loopInOneTest];
+                long[] avgs = new long[Control.LoopInOneTest];
 
-                for (int i = 0; i < Control.loopInOneTest; i++) {
+                for (int i = 0; i < Control.LoopInOneTest; i++) {
                     perfBase.reset();
 
                     long start = System.nanoTime();
@@ -100,7 +95,7 @@ public class PerfBaseHarness {
 
                 long avg = avg(avgs);
 
-                if (!isInGap(avgs, avg, Control.gapLimit)) {
+                if (!isInGap(avgs, avg, Control.DeltaLimit)) {
                     c.step();
                     //                    System.out.println("step" + c.curLoop);
                     continue;
@@ -108,7 +103,7 @@ public class PerfBaseHarness {
                     PerftestResult result = new PerftestResult();
                     result.avg = avg;
                     result.des = perfBase.des();
-                    result.loop = c.curLoop * Control.loopInOneTest;
+                    result.loop = c.curLoop * Control.LoopInOneTest;
                     result.name = perfBase.name();
 
                     resultList.add(result);
@@ -116,8 +111,8 @@ public class PerfBaseHarness {
                 }
             }
         }
-        System.out.println("gapLimit=" + Control.gapLimit + " loopInOneTest="
-                + Control.loopInOneTest);
+        System.out.println("gapLimit=" + Control.DeltaLimit + " loopInOneTest="
+                + Control.LoopInOneTest);
         Collections.sort(resultList, new PerftestResultAvgComparator());
         System.out.println("---------------------");
         for (PerftestResult result : resultList) {

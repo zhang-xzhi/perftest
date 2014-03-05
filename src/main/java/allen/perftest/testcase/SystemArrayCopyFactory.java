@@ -7,7 +7,7 @@ public class SystemArrayCopyFactory extends AbstractPerfBaseFactory {
     @Override
     public void fillPerfBase() {
 
-        for (int i = 1; i <= 32; i++) {
+        for (int i = 1; i <= 1; i++) {
             add(new SystemArrayCopy(512 * i));
         }
     }
