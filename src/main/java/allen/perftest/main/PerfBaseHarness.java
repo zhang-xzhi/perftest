@@ -1,9 +1,10 @@
-package allen.perftest;
+package allen.perftest.main;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import allen.perftest.PerfBase;
 import allen.perftest.result.PerftestResult;
 import allen.perftest.result.PerftestResultAvgComparator;
 import allen.perftest.result.PerftestResultNameComparator;
