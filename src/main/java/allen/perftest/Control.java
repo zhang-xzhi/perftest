@@ -1,6 +1,7 @@
 package allen.perftest;
 
 public class Control {
+
     public final static int LoopMaxLimit = 10000000;
 
     public static Control defaultControl() {

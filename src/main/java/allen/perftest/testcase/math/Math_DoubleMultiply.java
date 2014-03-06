@@ -2,13 +2,13 @@ package allen.perftest.testcase.math;
 
 import allen.perftest.AbstractPerfBase;
 
-public class Math_IntMultiply extends AbstractPerfBase {
-    static int  t;
+public class Math_DoubleMultiply extends AbstractPerfBase {
+    static double  t;
 
-    private int x;
-    private int y;
+    private double x;
+    private double y;
 
-    public Math_IntMultiply(int x, int y) {
+    public Math_DoubleMultiply(double x, double y) {
         this.x = x;
         this.y = y;
     }
