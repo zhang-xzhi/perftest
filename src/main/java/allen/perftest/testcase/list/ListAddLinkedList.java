@@ -8,7 +8,7 @@ public class ListAddLinkedList extends ListAdd {
     }
 
     @Override
-    public void reset() {
+    public void beforeRunSuite() {
         list = new LinkedList<String>();
     }
 

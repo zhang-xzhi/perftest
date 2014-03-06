@@ -1,14 +1,26 @@
 package allen.perftest.testcase.cache;
 
 import allen.perftest.AbstractPerfBase;
+import allen.perftest.Control;
 
 public class CacheIntArrayOperation extends AbstractPerfBase {
-    public static int CacheLine = 64;
-    private int[]     arr       = new int[CacheLine * 1024];
-    private int       step;
+
+    private int[] arr;
+    private int   step;
 
     public CacheIntArrayOperation(int step) {
         this.step = step;
+    }
+
+    @Override
+    public void beforeRunSuite() {
+        arr = new int[4 * 1024 * 1024];
+    }
+
+    @Override
+    public void afterRunSuite() {
+        arr = null;
+        getControl().gc();
     }
 
     @Override
@@ -16,7 +28,6 @@ public class CacheIntArrayOperation extends AbstractPerfBase {
         for (int i = 0; i < arr.length; i += step) {
             arr[i] *= 3;
         }
-
     }
 
     @Override
@@ -27,5 +38,10 @@ public class CacheIntArrayOperation extends AbstractPerfBase {
     @Override
     public Object[] extraPara() {
         return new Object[] { step };
+    }
+
+    @Override
+    public Control getControl() {
+        return Control.controlForCache();
     }
 }

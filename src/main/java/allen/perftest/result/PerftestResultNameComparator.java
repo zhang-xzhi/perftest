@@ -25,6 +25,7 @@ public class PerftestResultNameComparator implements Comparator<PerftestResult> 
                 }
             }
         }
+
         return System.identityHashCode(o1) - System.identityHashCode(o2);
     }
 }

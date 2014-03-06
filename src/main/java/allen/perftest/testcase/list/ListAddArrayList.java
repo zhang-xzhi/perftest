@@ -11,7 +11,7 @@ public class ListAddArrayList extends ListAdd {
     }
 
     @Override
-    public void reset() {
+    public void beforeRunSuite() {
         list = new ArrayList<String>(this.initialCapacity);
     }
 

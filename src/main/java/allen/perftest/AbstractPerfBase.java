@@ -2,29 +2,27 @@ package allen.perftest;
 
 abstract public class AbstractPerfBase implements PerfBase {
 
-    private String name;
-
-    public AbstractPerfBase(String name) {
-        this.name = name;
-    }
-
     public AbstractPerfBase() {
     }
 
-    public void reset() {
+    @Override
+    public void beforeRunSuite() {
+    }
+
+    public void afterRunSuite() {
     }
 
     @Override
     public String name() {
-        if (name == null) {
-            return this.getClass().getSimpleName();
-        } else {
-            return name;
-        }
+        return this.getClass().getSimpleName();
     }
 
     @Override
     public Object[] extraPara() {
         return null;
+    }
+
+    public Control getControl() {
+        return Control.defaultControl();
     }
 }
