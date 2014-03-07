@@ -22,7 +22,7 @@ import allen.perftest.testcase.list.ListFactory;
 import allen.perftest.testcase.math.MathFactory;
 import allen.perftest.testcase.reflect.ReflectionFactory;
 
-public class PerfBaseHarness {
+public class PerfTestHarness {
 
     private static List<PerfTestCase> init() {
         List<PerfTestCase> list = new ArrayList<PerfTestCase>();

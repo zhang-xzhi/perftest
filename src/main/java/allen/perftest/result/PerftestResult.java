@@ -15,14 +15,25 @@ public class PerftestResult {
     public String toString() {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("avg=" + avg + "\t");
-        sb.append("name=" + name + "\t");
-        sb.append("des=" + des + "\t");
+        sb.append(toFixedLength("avg=" + avg, 15));
+        sb.append(toFixedLength("name=" + name, 40));
+        sb.append(toFixedLength(control.getDes(), 30));
+        sb.append(toFixedLength("des=" + des, 50));
+
         if (extraPara != null) {
             for (Object t : extraPara)
                 sb.append("extraPara=" + t + "\t");
         }
-        sb.append(control.getDes());
+
+        return sb.toString();
+    }
+
+    private String toFixedLength(String s, int length) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(s);
+        while (sb.length() < length) {
+            sb.append(" ");
+        }
         return sb.toString();
     }
 
