@@ -2,9 +2,9 @@ package allen.perftest.testcase;
 
 import java.util.Date;
 
-import allen.perftest.AbstractPerfBase;
+import allen.perftest.AbstractPerfTestCase;
 
-public class NewDate extends AbstractPerfBase {
+public class NewDate extends AbstractPerfTestCase {
     static Date t;
 
     @Override

@@ -2,9 +2,9 @@ package allen.perftest.testcase.list;
 
 import java.util.List;
 
-import allen.perftest.AbstractPerfBase;
+import allen.perftest.AbstractPerfTestCase;
 
-abstract public class ListAdd extends AbstractPerfBase {
+abstract public class ListAdd extends AbstractPerfTestCase {
     protected List<String> list;
 
     public ListAdd() {

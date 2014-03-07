@@ -1,11 +1,11 @@
 package allen.perftest.testcase.exception;
 
-import allen.perftest.AbstractPerfBaseFactory;
+import allen.perftest.AbstractPerfTestCaseFactory;
 
-public class ExceptionFactory extends AbstractPerfBaseFactory {
+public class ExceptionFactory extends AbstractPerfTestCaseFactory {
 
     @Override
-    public void fillPerfBase() {
+    public void fillPerfTestCase() {
         add(new ExceptionThrowAndCatch());
         add(new ExceptionWithTryCatch());
         add(new ExceptionOnlyCreateException());

@@ -1,6 +1,6 @@
 package allen.perftest;
 
-public interface PerfBase {
+public interface PerfTestCase {
 
     public String name();
 

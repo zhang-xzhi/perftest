@@ -1,6 +1,6 @@
 package allen.perftest.testcase.cache;
 
-import allen.perftest.AbstractPerfBaseFactory;
+import allen.perftest.AbstractPerfTestCaseFactory;
 
 //use core info
 //Logical Processor to Cache Map:
@@ -11,10 +11,10 @@ import allen.perftest.AbstractPerfBaseFactory;
 //--**  Instruction Cache   1, Level 1,   32 KB, Assoc   8, LineSize  64
 //--**  Unified Cache       1, Level 2,  256 KB, Assoc   8, LineSize  64
 //****  Unified Cache       2, Level 3,    3 MB, Assoc  12, LineSize  64
-public class CacheFactory extends AbstractPerfBaseFactory {
+public class CacheFactory extends AbstractPerfTestCaseFactory {
 
     @Override
-    public void fillPerfBase() {
+    public void fillPerfTestCase() {
         //        add(new CacheIntArrayOperation(1));
         //        add(new CacheIntArrayOperation(2));
         //        add(new CacheIntArrayOperation(4));

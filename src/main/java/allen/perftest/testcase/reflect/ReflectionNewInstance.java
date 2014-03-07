@@ -1,8 +1,8 @@
 package allen.perftest.testcase.reflect;
 
-import allen.perftest.AbstractPerfBase;
+import allen.perftest.AbstractPerfTestCase;
 
-public class ReflectionNewInstance extends AbstractPerfBase {
+public class ReflectionNewInstance extends AbstractPerfTestCase {
 
     static Object o;
 

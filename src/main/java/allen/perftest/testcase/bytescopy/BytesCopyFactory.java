@@ -1,11 +1,11 @@
 package allen.perftest.testcase.bytescopy;
 
-import allen.perftest.AbstractPerfBaseFactory;
+import allen.perftest.AbstractPerfTestCaseFactory;
 
-public class BytesCopyFactory extends AbstractPerfBaseFactory {
+public class BytesCopyFactory extends AbstractPerfTestCaseFactory {
 
     @Override
-    public void fillPerfBase() {
+    public void fillPerfTestCase() {
 
         for (int i = 1; i <= 10; i++) {
             add(new SystemArrayCopy(512 * i));

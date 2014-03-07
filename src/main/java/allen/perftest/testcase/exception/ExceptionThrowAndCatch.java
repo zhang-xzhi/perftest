@@ -1,8 +1,8 @@
 package allen.perftest.testcase.exception;
 
-import allen.perftest.AbstractPerfBase;
+import allen.perftest.AbstractPerfTestCase;
 
-public class ExceptionThrowAndCatch extends AbstractPerfBase {
+public class ExceptionThrowAndCatch extends AbstractPerfTestCase {
     static Exception t;
 
     @Override

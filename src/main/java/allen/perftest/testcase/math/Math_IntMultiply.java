@@ -1,8 +1,8 @@
 package allen.perftest.testcase.math;
 
-import allen.perftest.AbstractPerfBase;
+import allen.perftest.AbstractPerfTestCase;
 
-public class Math_IntMultiply extends AbstractPerfBase {
+public class Math_IntMultiply extends AbstractPerfTestCase {
     static int  t;
 
     private int x;

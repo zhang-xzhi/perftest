@@ -1,9 +1,9 @@
 package allen.perftest.testcase.cache;
 
-import allen.perftest.AbstractPerfBase;
+import allen.perftest.AbstractPerfTestCase;
 import allen.perftest.Control;
 
-public class CacheIntArrayOperation extends AbstractPerfBase {
+public class CacheIntArrayOperation extends AbstractPerfTestCase {
 
     private int[] arr;
     private int   step;

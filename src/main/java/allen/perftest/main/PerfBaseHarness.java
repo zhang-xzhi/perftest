@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import allen.perftest.Control;
-import allen.perftest.PerfBase;
+import allen.perftest.PerfTestCase;
 import allen.perftest.result.PerftestResult;
 import allen.perftest.result.PerftestResultAvgComparator;
 import allen.perftest.result.PerftestResultNameComparator;
@@ -24,8 +24,8 @@ import allen.perftest.testcase.reflect.ReflectionFactory;
 
 public class PerfBaseHarness {
 
-    private static List<PerfBase> init() {
-        List<PerfBase> list = new ArrayList<PerfBase>();
+    private static List<PerfTestCase> init() {
+        List<PerfTestCase> list = new ArrayList<PerfTestCase>();
         list.add(new Empty());
 
         list.add(new NewDate());
@@ -35,12 +35,12 @@ public class PerfBaseHarness {
         list.add(new CreateObject());
         list.add(new CreateException());
 
-        list.addAll(new MathFactory().getPerfBase());
-        list.addAll(new CacheFactory().getPerfBase());
-        list.addAll(new BytesCopyFactory().getPerfBase());
-        list.addAll(new ReflectionFactory().getPerfBase());
-        list.addAll(new ExceptionFactory().getPerfBase());
-        list.addAll(new ListFactory().getPerfBase());
+        list.addAll(new MathFactory().getPerfTestCaseList());
+        list.addAll(new CacheFactory().getPerfTestCaseList());
+        list.addAll(new BytesCopyFactory().getPerfTestCaseList());
+        list.addAll(new ReflectionFactory().getPerfTestCaseList());
+        list.addAll(new ExceptionFactory().getPerfTestCaseList());
+        list.addAll(new ListFactory().getPerfTestCaseList());
 
         return list;
 
@@ -48,33 +48,33 @@ public class PerfBaseHarness {
 
     public static void main(String[] args) throws Exception {
 
-        List<PerfBase> list = init();
+        List<PerfTestCase> list = init();
         List<PerftestResult> resultList = new ArrayList<PerftestResult>();
 
-        for (PerfBase perfBase : list) {
-            Control c = perfBase.getControl();
+        for (PerfTestCase testCase : list) {
+            Control c = testCase.getControl();
 
             while (c.canStep()) {
                 c.step();
 
-                System.out.println("running " + perfBase.name() + " "
+                System.out.println("running " + testCase.name() + " "
                         + c.getDes());
 
-                long[] avgs = new long[c.getTestSuiteCount()];
+                long[] avgs = new long[c.getSuiteCount()];
 
-                for (int i = 0; i < c.getTestSuiteCount(); i++) {
+                for (int i = 0; i < c.getSuiteCount(); i++) {
 
-                    perfBase.beforeRunSuite();
+                    testCase.beforeRunSuite();
 
                     long start = System.nanoTime();
                     for (int j = 0; j < c.getCurLoop(); j++) {
-                        perfBase.run();
+                        testCase.run();
                     }
                     long timeDiff = System.nanoTime() - start;
 
                     avgs[i] = timeDiff / c.getCurLoop();
 
-                    perfBase.afterRunSuite();
+                    testCase.afterRunSuite();
                 }
 
                 long avg = avg(avgs);
@@ -83,14 +83,14 @@ public class PerfBaseHarness {
 
                     PerftestResult result = new PerftestResult();
                     result.avg = avg;
-                    result.des = perfBase.des();
-                    result.name = perfBase.name();
-                    result.perfTestCaseClass = perfBase.getClass();
-                    result.extraPara = perfBase.extraPara();
+                    result.des = testCase.des();
+                    result.name = testCase.name();
+                    result.perfTestCaseClass = testCase.getClass();
+                    result.extraPara = testCase.extraPara();
                     result.control = c;
 
                     resultList.add(result);
-                    System.out.println("done " + perfBase.name() + " "
+                    System.out.println("done " + testCase.name() + " "
                             + c.getDes());
                     break;
                 }

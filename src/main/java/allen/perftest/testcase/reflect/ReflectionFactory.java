@@ -1,11 +1,11 @@
 package allen.perftest.testcase.reflect;
 
-import allen.perftest.AbstractPerfBaseFactory;
+import allen.perftest.AbstractPerfTestCaseFactory;
 
-public class ReflectionFactory extends AbstractPerfBaseFactory {
+public class ReflectionFactory extends AbstractPerfTestCaseFactory {
 
     @Override
-    public void fillPerfBase() {
+    public void fillPerfTestCase() {
 
         add(new ReflectionField());
         add(new ReflectionFieldInvoke());

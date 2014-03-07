@@ -1,8 +1,8 @@
 package allen.perftest.testcase.exception;
 
-import allen.perftest.AbstractPerfBase;
+import allen.perftest.AbstractPerfTestCase;
 
-public class ExceptionWithTryCatch extends AbstractPerfBase {
+public class ExceptionWithTryCatch extends AbstractPerfTestCase {
     static Exception t;
     static int       totalSum;
 

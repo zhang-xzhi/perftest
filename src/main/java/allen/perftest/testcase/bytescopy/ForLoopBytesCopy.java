@@ -1,8 +1,8 @@
 package allen.perftest.testcase.bytescopy;
 
-import allen.perftest.AbstractPerfBase;
+import allen.perftest.AbstractPerfTestCase;
 
-public class ForLoopBytesCopy extends AbstractPerfBase {
+public class ForLoopBytesCopy extends AbstractPerfTestCase {
     int    size;
     byte[] data;
     byte[] des;

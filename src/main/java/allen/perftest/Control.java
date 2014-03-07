@@ -9,7 +9,7 @@ public class Control {
         c.curLoop = 0;
         c.loopStep = 10000;
         c.consumingTimeDeltaLimit = 0.2D;
-        c.testSuiteCount = 5;
+        c.suiteCount = 5;
         return c;
     }
 
@@ -18,13 +18,13 @@ public class Control {
         c.curLoop = 0;
         c.loopStep = 1;
         c.consumingTimeDeltaLimit = 0.2D;
-        c.testSuiteCount = 1;
+        c.suiteCount = 1;
         return c;
     }
 
     protected int    curLoop;
     protected int    loopStep;
-    protected int    testSuiteCount;
+    protected int    suiteCount;
     protected double consumingTimeDeltaLimit;
 
     public boolean canStep() {
@@ -43,12 +43,12 @@ public class Control {
         return consumingTimeDeltaLimit;
     }
 
-    public int getTestSuiteCount() {
-        return testSuiteCount;
+    public int getSuiteCount() {
+        return suiteCount;
     }
 
     public String getDes() {
-        return "loop=" + curLoop + " suite=" + testSuiteCount + " delta="
+        return "loop=" + curLoop + " suite=" + suiteCount + " delta="
                 + consumingTimeDeltaLimit;
     }
 

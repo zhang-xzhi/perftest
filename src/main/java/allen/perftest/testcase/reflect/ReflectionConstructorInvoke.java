@@ -2,9 +2,9 @@ package allen.perftest.testcase.reflect;
 
 import java.lang.reflect.Constructor;
 
-import allen.perftest.AbstractPerfBase;
+import allen.perftest.AbstractPerfTestCase;
 
-public class ReflectionConstructorInvoke extends AbstractPerfBase {
+public class ReflectionConstructorInvoke extends AbstractPerfTestCase {
 
     static Constructor<ReflectionConstructorInvoke> c;
     static Object                                   o;

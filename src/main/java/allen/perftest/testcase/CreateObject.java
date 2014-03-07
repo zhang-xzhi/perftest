@@ -1,8 +1,8 @@
 package allen.perftest.testcase;
 
-import allen.perftest.AbstractPerfBase;
+import allen.perftest.AbstractPerfTestCase;
 
-public class CreateObject extends AbstractPerfBase {
+public class CreateObject extends AbstractPerfTestCase {
 
     static A a;
 

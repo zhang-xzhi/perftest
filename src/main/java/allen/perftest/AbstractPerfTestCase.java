@@ -1,8 +1,8 @@
 package allen.perftest;
 
-abstract public class AbstractPerfBase implements PerfBase {
+abstract public class AbstractPerfTestCase implements PerfTestCase {
 
-    public AbstractPerfBase() {
+    public AbstractPerfTestCase() {
     }
 
     @Override

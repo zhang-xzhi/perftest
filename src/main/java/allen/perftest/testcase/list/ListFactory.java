@@ -1,11 +1,11 @@
 package allen.perftest.testcase.list;
 
-import allen.perftest.AbstractPerfBaseFactory;
+import allen.perftest.AbstractPerfTestCaseFactory;
 
-public class ListFactory extends AbstractPerfBaseFactory {
+public class ListFactory extends AbstractPerfTestCaseFactory {
 
     @Override
-    public void fillPerfBase() {
+    public void fillPerfTestCase() {
         add(new ListAddArrayList(10));
         add(new ListAddArrayList(1000));
         add(new ListAddArrayList(10000));

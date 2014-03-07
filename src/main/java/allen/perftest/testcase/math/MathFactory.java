@@ -1,11 +1,11 @@
 package allen.perftest.testcase.math;
 
-import allen.perftest.AbstractPerfBaseFactory;
+import allen.perftest.AbstractPerfTestCaseFactory;
 
-public class MathFactory extends AbstractPerfBaseFactory {
+public class MathFactory extends AbstractPerfTestCaseFactory {
 
     @Override
-    public void fillPerfBase() {
+    public void fillPerfTestCase() {
 
         for (int x = -17; x <= 17; x += 17) {
             for (int y = -17; y <= 17; y += 17) {

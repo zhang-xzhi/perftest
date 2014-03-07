@@ -2,9 +2,9 @@ package allen.perftest.testcase.reflect;
 
 import java.lang.reflect.Method;
 
-import allen.perftest.AbstractPerfBase;
+import allen.perftest.AbstractPerfTestCase;
 
-public class ReflectionMethodInvoke extends AbstractPerfBase {
+public class ReflectionMethodInvoke extends AbstractPerfTestCase {
 
     static Method m;
     static Object o;

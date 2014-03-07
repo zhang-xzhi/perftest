@@ -1,8 +1,8 @@
 package allen.perftest.testcase;
 
-import allen.perftest.AbstractPerfBase;
+import allen.perftest.AbstractPerfTestCase;
 
-public class TimeMeasurementNanoTime extends AbstractPerfBase {
+public class TimeMeasurementNanoTime extends AbstractPerfTestCase {
     static long t;
 
     @Override

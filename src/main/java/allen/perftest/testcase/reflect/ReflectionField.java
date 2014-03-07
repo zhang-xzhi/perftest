@@ -2,9 +2,9 @@ package allen.perftest.testcase.reflect;
 
 import java.lang.reflect.Field;
 
-import allen.perftest.AbstractPerfBase;
+import allen.perftest.AbstractPerfTestCase;
 
-public class ReflectionField extends AbstractPerfBase {
+public class ReflectionField extends AbstractPerfTestCase {
     static Field  f;
     
     public String name;
