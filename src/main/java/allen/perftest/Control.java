@@ -13,6 +13,15 @@ public class Control {
         return c;
     }
 
+    public static Control controlForString() {
+        Control c = new Control();
+        c.curLoop = 0;
+        c.loopStep = 1000;
+        c.consumingTimeDeltaLimit = 0.2D;
+        c.suiteCount = 5;
+        return c;
+    }
+
     public static Control controlForCache() {
         Control c = new Control();
         c.curLoop = 0;

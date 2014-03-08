@@ -11,36 +11,39 @@ import allen.perftest.result.PerftestResultAvgComparator;
 import allen.perftest.result.PerftestResultNameComparator;
 import allen.perftest.testcase.CreateException;
 import allen.perftest.testcase.CreateObject;
-import allen.perftest.testcase.TimeMeasurementCurrentTimeMillis;
 import allen.perftest.testcase.Empty;
-import allen.perftest.testcase.NewDate;
-import allen.perftest.testcase.TimeMeasurementNanoTime;
 import allen.perftest.testcase.bytescopy.BytesCopyFactory;
 import allen.perftest.testcase.cache.CacheFactory;
 import allen.perftest.testcase.exception.ExceptionFactory;
 import allen.perftest.testcase.list.ListFactory;
 import allen.perftest.testcase.math.MathFactory;
+import allen.perftest.testcase.memory.MMFactory;
 import allen.perftest.testcase.reflect.ReflectionFactory;
+import allen.perftest.testcase.string.StringFactory;
+import allen.perftest.testcase.time.TimeFactory;
+import allen.perftest.testcase.time.Time_NewDate;
+import allen.perftest.testcase.time.Time_CurrentTimeMillis;
+import allen.perftest.testcase.time.Time_NanoTime;
 
 public class PerfTestHarness {
 
     private static List<PerfTestCase> init() {
         List<PerfTestCase> list = new ArrayList<PerfTestCase>();
-        list.add(new Empty());
 
-        list.add(new NewDate());
-        list.add(new TimeMeasurementCurrentTimeMillis());
-        list.add(new TimeMeasurementNanoTime());
+        //        list.add(new Empty());
+        //        list.add(new CreateObject());
+        //        list.add(new CreateException());
+        //
+        //        list.addAll(new MathFactory().getPerfTestCaseList());
+        //        list.addAll(new CacheFactory().getPerfTestCaseList());
+        //        list.addAll(new ListFactory().getPerfTestCaseList());
 
-        list.add(new CreateObject());
-        list.add(new CreateException());
-
-        list.addAll(new MathFactory().getPerfTestCaseList());
-        list.addAll(new CacheFactory().getPerfTestCaseList());
-        list.addAll(new BytesCopyFactory().getPerfTestCaseList());
-        list.addAll(new ReflectionFactory().getPerfTestCaseList());
         list.addAll(new ExceptionFactory().getPerfTestCaseList());
-        list.addAll(new ListFactory().getPerfTestCaseList());
+        list.addAll(new ReflectionFactory().getPerfTestCaseList());
+        list.addAll(new BytesCopyFactory().getPerfTestCaseList());
+        list.addAll(new TimeFactory().getPerfTestCaseList());
+        list.addAll(new StringFactory().getPerfTestCaseList());
+        list.addAll(new MMFactory().getPerfTestCaseList());
 
         return list;
 

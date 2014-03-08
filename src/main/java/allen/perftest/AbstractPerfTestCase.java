@@ -9,6 +9,7 @@ abstract public class AbstractPerfTestCase implements PerfTestCase {
     public void beforeRunSuite() {
     }
 
+    @Override
     public void afterRunSuite() {
     }
 
