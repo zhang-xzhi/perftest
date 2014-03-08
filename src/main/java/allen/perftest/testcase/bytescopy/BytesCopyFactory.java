@@ -7,7 +7,7 @@ public class BytesCopyFactory extends AbstractPerfTestCaseFactory {
     @Override
     public void fillPerfTestCase() {
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 20; i++) {
             add(new SystemArrayCopy(512 * i));
             add(new ForLoopBytesCopy(512 * i));
         }

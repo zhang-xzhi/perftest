@@ -1,10 +1,10 @@
-package allen.perftest.testcase;
+package allen.perftest.testcase.time;
 
 import java.util.Date;
 
 import allen.perftest.AbstractPerfTestCase;
 
-public class NewDate extends AbstractPerfTestCase {
+public class Time_NewDate extends AbstractPerfTestCase {
     static Date t;
 
     @Override

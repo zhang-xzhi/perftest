@@ -1,8 +1,8 @@
-package allen.perftest.testcase;
+package allen.perftest.testcase.time;
 
 import allen.perftest.AbstractPerfTestCase;
 
-public class TimeMeasurementCurrentTimeMillis extends AbstractPerfTestCase {
+public class Time_CurrentTimeMillis extends AbstractPerfTestCase {
     static long t;
 
     @Override
