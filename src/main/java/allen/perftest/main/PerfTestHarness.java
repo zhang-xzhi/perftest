@@ -39,11 +39,11 @@ public class PerfTestHarness {
         //        list.addAll(new ListFactory().getPerfTestCaseList());
 
         list.addAll(new ExceptionFactory().getPerfTestCaseList());
-        list.addAll(new ReflectionFactory().getPerfTestCaseList());
-        list.addAll(new BytesCopyFactory().getPerfTestCaseList());
-        list.addAll(new TimeFactory().getPerfTestCaseList());
-        list.addAll(new StringFactory().getPerfTestCaseList());
-        list.addAll(new MMFactory().getPerfTestCaseList());
+//        list.addAll(new ReflectionFactory().getPerfTestCaseList());
+//        list.addAll(new BytesCopyFactory().getPerfTestCaseList());
+//        list.addAll(new TimeFactory().getPerfTestCaseList());
+//        list.addAll(new StringFactory().getPerfTestCaseList());
+//        list.addAll(new MMFactory().getPerfTestCaseList());
 
         return list;
 

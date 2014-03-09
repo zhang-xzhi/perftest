@@ -6,8 +6,10 @@ public class ExceptionFactory extends AbstractPerfTestCaseFactory {
 
     @Override
     public void fillPerfTestCase() {
-        add(new ExceptionThrowAndCatch());
-        add(new ExceptionWithTryCatch());
-        add(new ExceptionOnlyCreateException());
+        for (int i = 1; i <= 1024; i = i * 2) {
+            add(new ExceptionThrowAndCatch(i));
+            add(new ExceptionWithTryCatch(i));
+            add(new ExceptionOnlyCreateException(i));
+        }
     }
 }

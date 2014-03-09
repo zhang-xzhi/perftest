@@ -3,24 +3,37 @@ package allen.perftest.testcase.exception;
 import allen.perftest.AbstractPerfTestCase;
 
 public class ExceptionWithTryCatch extends AbstractPerfTestCase {
-    static Exception t;
-    static int       totalSum;
+    static int        tem;
+    final private int deepth;
 
-    private int sum(int i, int j) throws Exception {
-        return i + j;
+    public ExceptionWithTryCatch(int deepth) {
+        this.deepth = deepth;
+    }
+
+    private int f(int deepth) {
+        if (deepth <= 0) {
+            return tem;
+        }
+        tem += f(--deepth);
+        return tem;
     }
 
     @Override
     public void run() {
         try {
-            totalSum = sum(0, 0);
+            tem = f(deepth);
         } catch (Exception e) {
-            t = e;
+            //ignore.
         }
     }
 
     @Override
     public String des() {
         return "only try block.";
+    }
+
+    @Override
+    public Object[] extraPara() {
+        return new Object[] { deepth };
     }
 }
