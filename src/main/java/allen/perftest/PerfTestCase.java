@@ -13,6 +13,6 @@ public interface PerfTestCase {
     public String des();
 
     public Object[] extraPara();
-    
+
     public Control getControl();
 }
