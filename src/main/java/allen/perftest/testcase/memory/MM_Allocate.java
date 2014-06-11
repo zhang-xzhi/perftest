@@ -2,11 +2,11 @@ package allen.perftest.testcase.memory;
 
 import allen.perftest.AbstractPerfTestCase;
 
-public class MM_Alocate extends AbstractPerfTestCase {
+public class MM_Allocate extends AbstractPerfTestCase {
     static byte[] t;
     private int   size;
 
-    public MM_Alocate(int size) {
+    public MM_Allocate(int size) {
         super();
         this.size = size;
     }
@@ -18,7 +18,7 @@ public class MM_Alocate extends AbstractPerfTestCase {
 
     @Override
     public String des() {
-        return "alocate memory.";
+        return "allocate memory using new byte[size]";
     }
 
     @Override

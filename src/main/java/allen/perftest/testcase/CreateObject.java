@@ -21,7 +21,6 @@ public class CreateObject extends AbstractPerfTestCase {
         public int y;
 
         public A(int x, int y) {
-            super();
             this.x = x;
             this.y = y;
         }

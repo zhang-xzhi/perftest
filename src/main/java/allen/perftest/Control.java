@@ -31,6 +31,15 @@ public class Control {
         return c;
     }
 
+    public static Control controlForMM() {
+        Control c = new Control();
+        c.curLoop = 0;
+        c.loopStep = 1;
+        c.consumingTimeDeltaLimit = 0.2D;
+        c.suiteCount = 1;
+        return c;
+    }
+
     protected int    curLoop;
     protected int    loopStep;
     protected int    suiteCount;
