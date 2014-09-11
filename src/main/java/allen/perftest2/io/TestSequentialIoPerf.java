@@ -1,4 +1,4 @@
-package allen.perftest.io;
+package allen.perftest2.io;
 
 import java.io.*;
 import java.nio.ByteBuffer;

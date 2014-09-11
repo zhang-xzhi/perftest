@@ -32,7 +32,9 @@
 					<target>1.6</target>
 				    <encoding>UTF-8</encoding>
 				</configuration>
-			</plugin>
+			</plugin>		
+
+
 		</plugins>					
 	</build>
 </project>
