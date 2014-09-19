@@ -72,6 +72,11 @@ public class Control {
 
     public void gc() {
         System.gc();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         System.gc();
         try {
             Thread.sleep(200);

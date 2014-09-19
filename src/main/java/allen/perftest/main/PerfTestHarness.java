@@ -28,7 +28,9 @@ public class PerfTestHarness {
         List<PerfTestCase> list = new ArrayList<PerfTestCase>();
 
         list.add(new CreateException());
+
         list.add(new CreateObject());
+
         list.add(new Empty());
 
         list.addAll(new BytesCopyFactory().getPerfTestCaseList());
@@ -72,16 +74,15 @@ public class PerfTestHarness {
                 for (int i = 0; i < c.getSuiteCount(); i++) {
 
                     testCase.beforeRunSuite();
-
                     long start = System.nanoTime();
                     for (int j = 0; j < c.getCurLoop(); j++) {
                         testCase.run();
                     }
                     long timeDiff = System.nanoTime() - start;
+                    testCase.afterRunSuite();
 
                     avgs[i] = timeDiff / c.getCurLoop();
 
-                    testCase.afterRunSuite();
                 }
 
                 long avg = avg(avgs);
