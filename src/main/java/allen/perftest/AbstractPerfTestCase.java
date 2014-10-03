@@ -2,6 +2,8 @@ package allen.perftest;
 
 abstract public class AbstractPerfTestCase implements PerfTestCase {
 
+    protected Control control = new Control();
+
     public AbstractPerfTestCase() {
     }
 
@@ -23,7 +25,8 @@ abstract public class AbstractPerfTestCase implements PerfTestCase {
         return null;
     }
 
+    @Override
     public Control getControl() {
-        return Control.defaultControl();
+        return control;
     }
 }

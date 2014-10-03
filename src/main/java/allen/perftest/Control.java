@@ -1,64 +1,61 @@
 package allen.perftest;
 
+import allen.perftest.result.PerftestResult;
+
 public class Control {
 
-    public final static int LoopMaxLimit = 10000000;
+    private final static long Default_Loop_Max_Limit = Long.MAX_VALUE;
+    private final static int  Adjust_Max_Limit       = 5;
 
-    public static Control defaultControl() {
-        Control c = new Control();
-        c.curLoop = 0;
-        c.loopStep = 10000;
-        c.consumingTimeDeltaLimit = 0.2D;
-        c.suiteCount = 5;
-        return c;
+    //trigger JIT
+    protected long            warmupLoop             = 10000;
+
+    protected long            curLoop;
+
+    protected int             suiteCount             = 5;
+
+    protected boolean         needGcBeforeRun        = false;
+
+    private int               adjustCounter;
+
+    public boolean isNeedGcBeforeRun() {
+        return needGcBeforeRun;
     }
 
-    public static Control controlForString() {
-        Control c = new Control();
-        c.curLoop = 0;
-        c.loopStep = 1000;
-        c.consumingTimeDeltaLimit = 0.2D;
-        c.suiteCount = 5;
-        return c;
+    public boolean isSatisfied(PerftestResult perftestResult) {
+        //        return true;
+        //时间在1s以上。
+        return perftestResult.avg * curLoop >= 1000000000D;
     }
 
-    public static Control controlForCache() {
-        Control c = new Control();
-        c.curLoop = 0;
-        c.loopStep = 1;
-        c.consumingTimeDeltaLimit = 0.2D;
-        c.suiteCount = 1;
-        return c;
+    public void adjust(PerftestResult perftestResult) {
+        curLoop = curLoop + curLoop;
+        adjustCounter++;
+        if (adjustCounter > Adjust_Max_Limit) {
+            throw new RuntimeException();
+        }
     }
 
-    public static Control controlForMM() {
-        Control c = new Control();
-        c.curLoop = 0;
-        c.loopStep = 1;
-        c.consumingTimeDeltaLimit = 0.2D;
-        c.suiteCount = 1;
-        return c;
+    /**
+     * 调整curLoop.
+     * 
+     * <pre>
+     * 期望一个suite可以在2s左右。
+     * </pre>
+     * */
+    public void adjust(double consumeTime, long loop) {
+        double avg = consumeTime / loop;
+
+        double expectLoop = 2000000000D / avg;
+        if (expectLoop >= Default_Loop_Max_Limit) {
+            throw new RuntimeException();
+        } else {
+            curLoop = (long) expectLoop;
+        }
     }
 
-    protected int    curLoop;
-    protected int    loopStep;
-    protected int    suiteCount;
-    protected double consumingTimeDeltaLimit;
-
-    public boolean canStep() {
-        return curLoop + loopStep <= LoopMaxLimit;
-    }
-
-    public void step() {
-        curLoop += loopStep;
-    }
-
-    public int getCurLoop() {
+    public long getCurLoop() {
         return curLoop;
-    }
-
-    public double getConsumingTimeDeltaLimit() {
-        return consumingTimeDeltaLimit;
     }
 
     public int getSuiteCount() {
@@ -66,25 +63,13 @@ public class Control {
     }
 
     public String getDes() {
-        return "loop=" + curLoop + " suite=" + suiteCount + " delta="
-                + consumingTimeDeltaLimit;
+        return "[" + "suite=" + suiteCount + " loop=" + curLoop + "]";
     }
 
-    public void gc() {
-        System.gc();
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        System.gc();
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    public long getWarmupLoop() {
+        return warmupLoop;
     }
 
-    private Control() {
+    public Control() {
     }
 }

@@ -3,7 +3,6 @@ package allen.perftest.testcase.memory;
 import java.nio.ByteBuffer;
 
 import allen.perftest.AbstractPerfTestCase;
-import allen.perftest.Control;
 
 public class MM_DirectBuffer extends AbstractPerfTestCase {
     static ByteBuffer buffer;
@@ -30,8 +29,4 @@ public class MM_DirectBuffer extends AbstractPerfTestCase {
         return new Object[] { size };
     }
 
-    @Override
-    public Control getControl() {
-        return Control.controlForMM();
-    }
 }

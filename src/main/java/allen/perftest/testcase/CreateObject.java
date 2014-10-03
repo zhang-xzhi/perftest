@@ -4,7 +4,12 @@ import allen.perftest.AbstractPerfTestCase;
 
 public class CreateObject extends AbstractPerfTestCase {
 
-    static A a;
+    private A a;
+
+    @Override
+    public void afterRunSuite() {
+        System.out.println(a);
+    }
 
     @Override
     public void run() {

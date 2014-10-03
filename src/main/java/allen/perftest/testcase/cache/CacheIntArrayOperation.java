@@ -1,7 +1,6 @@
 package allen.perftest.testcase.cache;
 
 import allen.perftest.AbstractPerfTestCase;
-import allen.perftest.Control;
 
 public class CacheIntArrayOperation extends AbstractPerfTestCase {
 
@@ -20,7 +19,6 @@ public class CacheIntArrayOperation extends AbstractPerfTestCase {
     @Override
     public void afterRunSuite() {
         arr = null;
-        getControl().gc();
     }
 
     @Override
@@ -40,8 +38,4 @@ public class CacheIntArrayOperation extends AbstractPerfTestCase {
         return new Object[] { step };
     }
 
-    @Override
-    public Control getControl() {
-        return Control.controlForCache();
-    }
 }

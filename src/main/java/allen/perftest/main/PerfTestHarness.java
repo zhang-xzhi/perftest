@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import allen.perf.math.MathUtil;
 import allen.perftest.Control;
 import allen.perftest.PerfTestCase;
 import allen.perftest.result.PerftestResult;
-import allen.perftest.result.PerftestResultAvgComparator;
 import allen.perftest.result.PerftestResultNameComparator;
 import allen.perftest.testcase.CreateException;
 import allen.perftest.testcase.CreateObject;
@@ -25,34 +25,56 @@ import allen.perftest.testcase.time.TimeFactory;
 public class PerfTestHarness {
 
     private static List<PerfTestCase> init() {
+
         List<PerfTestCase> list = new ArrayList<PerfTestCase>();
 
-        list.add(new CreateException());
-
+        //        list.add(new CreateException());
+        //
         list.add(new CreateObject());
+        //
+        //        list.add(new Empty());
+        //
+        //        list.addAll(new BytesCopyFactory().getPerfTestCaseList());
+        //
+        //        list.addAll(new CacheFactory().getPerfTestCaseList());
+        //
+        //        list.addAll(new ExceptionFactory().getPerfTestCaseList());
+        //
+        //        list.addAll(new ListFactory().getPerfTestCaseList());
+        //
+        //        list.addAll(new MathFactory().getPerfTestCaseList());
+        //
+        //        list.addAll(new MMFactory().getPerfTestCaseList());
+        //
+        //        list.addAll(new ReflectionFactory().getPerfTestCaseList());
 
-        list.add(new Empty());
+        //        list.addAll(new StringFactory().getPerfTestCaseList());
 
-        list.addAll(new BytesCopyFactory().getPerfTestCaseList());
-
-        list.addAll(new CacheFactory().getPerfTestCaseList());
-
-        list.addAll(new ExceptionFactory().getPerfTestCaseList());
-
-        list.addAll(new ListFactory().getPerfTestCaseList());
-
-        list.addAll(new MathFactory().getPerfTestCaseList());
-
-        list.addAll(new MMFactory().getPerfTestCaseList());
-
-        list.addAll(new ReflectionFactory().getPerfTestCaseList());
-
-        list.addAll(new StringFactory().getPerfTestCaseList());
-
-        list.addAll(new TimeFactory().getPerfTestCaseList());
+        //        list.addAll(new TimeFactory().getPerfTestCaseList());
 
         return list;
 
+    }
+
+    private static void warmup(PerfTestCase testCase, long loop) {
+        Control c = testCase.getControl();
+
+        //warm up
+        long start = System.nanoTime();
+        testCase.beforeRunSuite();
+        for (long j = 0; j < loop; j++) {
+            testCase.run();
+        }
+        testCase.afterRunSuite();
+        long timeDiff = System.nanoTime() - start;
+        //warm up
+
+        System.out.println("warm up " + testCase.name() + " " + c.getDes()
+                + " timeDiff=" + timeDiff);
+
+        c.adjust(timeDiff, loop);
+        System.out
+                .println("after adjust " + testCase.name() + " " + c.getDes());
     }
 
     public static void main(String[] args) throws Exception {
@@ -61,17 +83,24 @@ public class PerfTestHarness {
         List<PerftestResult> resultList = new ArrayList<PerftestResult>();
 
         for (PerfTestCase testCase : list) {
+
             Control c = testCase.getControl();
 
-            while (c.canStep()) {
-                c.step();
+            warmup(testCase, c.getWarmupLoop());
+            warmup(testCase, c.getCurLoop());
+
+            while (true) {
 
                 System.out.println("running " + testCase.name() + " "
                         + c.getDes());
 
-                long[] avgs = new long[c.getSuiteCount()];
+                double[] avgs = new double[c.getSuiteCount()];
 
                 for (int i = 0; i < c.getSuiteCount(); i++) {
+
+                    if (c.isNeedGcBeforeRun()) {
+                        gc();
+                    }
 
                     testCase.beforeRunSuite();
                     long start = System.nanoTime();
@@ -81,58 +110,53 @@ public class PerfTestHarness {
                     long timeDiff = System.nanoTime() - start;
                     testCase.afterRunSuite();
 
-                    avgs[i] = timeDiff / c.getCurLoop();
-
+                    avgs[i] = 1.0D * timeDiff / c.getCurLoop();
                 }
 
-                long avg = avg(avgs);
+                PerftestResult result = new PerftestResult();
 
-                if (isInDelta(avgs, avg, c.getConsumingTimeDeltaLimit())) {
+                result.des = testCase.des();
+                result.name = testCase.name();
+                result.perfTestCaseClass = testCase.getClass();
+                result.extraPara = testCase.extraPara();
+                result.control = c;
+                result.results = avgs;
 
-                    PerftestResult result = new PerftestResult();
-                    result.avg = avg;
-                    result.des = testCase.des();
-                    result.name = testCase.name();
-                    result.perfTestCaseClass = testCase.getClass();
-                    result.extraPara = testCase.extraPara();
-                    result.control = c;
+                result.avg = MathUtil.avg(avgs);
+                result.standardDeviation = MathUtil.standardDeviation(avgs);
 
+                if (c.isSatisfied(result)) {
                     resultList.add(result);
                     System.out.println("done " + testCase.name() + " "
                             + c.getDes());
                     break;
                 }
 
+                c.adjust(result);
             }
         }
 
-        Collections.sort(resultList, new PerftestResultAvgComparator());
         System.out.println("---------------------");
+
         Collections.sort(resultList, new PerftestResultNameComparator());
         for (PerftestResult result : resultList) {
             System.out.println(result);
         }
     }
 
-    public static long sum(long[] a) {
-        long t = 0;
-        for (long i : a) {
-            t += i;
+    public static void gc() {
+        System.gc();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        return t;
-    }
 
-    public static long avg(long[] a) {
-        return sum(a) / a.length;
-    }
-
-    public static boolean isInDelta(long[] a, long c, double gap) {
-        for (long i : a) {
-            double delta = 1.0D * (i - c) / c;
-            if (delta < -gap || delta > gap) {
-                return false;
-            }
+        System.gc();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        return true;
     }
 }
