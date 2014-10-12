@@ -19,6 +19,7 @@ java                                             ^
 -cp .\\target\\classes;./lib/commons-math3-3.3.jar allen.perftest.main.PerfTestHarness 
 pause
 
+
 -Xcomp                                           ^
 -XX:+ScavengeBeforeFullGC                        ^
 -XX:-BackgroundCompilation                       ^

@@ -27,10 +27,10 @@ public class PerfTestHarness {
     private static List<PerfTestCase> init() {
 
         List<PerfTestCase> list = new ArrayList<PerfTestCase>();
-
+        //
         //        list.add(new CreateException());
         //
-        list.add(new CreateObject());
+        //        list.add(new CreateObject());
         //
         //        list.add(new Empty());
         //
@@ -50,7 +50,7 @@ public class PerfTestHarness {
 
         //        list.addAll(new StringFactory().getPerfTestCaseList());
 
-        //        list.addAll(new TimeFactory().getPerfTestCaseList());
+        list.addAll(new TimeFactory().getPerfTestCaseList());
 
         return list;
 
@@ -69,12 +69,12 @@ public class PerfTestHarness {
         long timeDiff = System.nanoTime() - start;
         //warm up
 
-        System.out.println("warm up " + testCase.name() + " " + c.getDes()
-                + " timeDiff=" + timeDiff);
+        System.out.println("[allen] warm up " + testCase.name() + " "
+                + c.getDes() + " timeDiff=" + timeDiff);
 
         c.adjust(timeDiff, loop);
-        System.out
-                .println("after adjust " + testCase.name() + " " + c.getDes());
+        System.out.println("[allen] after adjust " + testCase.name() + " "
+                + c.getDes());
     }
 
     public static void main(String[] args) throws Exception {
@@ -91,7 +91,7 @@ public class PerfTestHarness {
 
             while (true) {
 
-                System.out.println("running " + testCase.name() + " "
+                System.out.println("[allen]  running " + testCase.name() + " "
                         + c.getDes());
 
                 double[] avgs = new double[c.getSuiteCount()];
@@ -127,7 +127,7 @@ public class PerfTestHarness {
 
                 if (c.isSatisfied(result)) {
                     resultList.add(result);
-                    System.out.println("done " + testCase.name() + " "
+                    System.out.println("[allen] done " + testCase.name() + " "
                             + c.getDes());
                     break;
                 }

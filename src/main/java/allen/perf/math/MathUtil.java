@@ -1,16 +1,21 @@
 package allen.perf.math;
 
-import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
-
 public class MathUtil {
 
     public static double avg(double[] arr) {
-        DescriptiveStatistics stat = new DescriptiveStatistics(arr);
-        return stat.getMean();
+        double sum = 0;
+        for (double d : arr) {
+            sum += d;
+        }
+        return sum / arr.length;
     }
 
     public static double standardDeviation(double[] arr) {
-        DescriptiveStatistics stat = new DescriptiveStatistics(arr);
-        return stat.getStandardDeviation();
+        double avg = avg(arr);
+        double sum = 0;
+        for (double d : arr) {
+            sum = sum + (d - avg) * (d - avg);
+        }
+        return Math.sqrt(sum / arr.length);
     }
 }
