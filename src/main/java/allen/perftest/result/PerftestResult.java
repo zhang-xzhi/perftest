@@ -21,17 +21,21 @@ public class PerftestResult {
         StringBuilder sb = new StringBuilder();
 
         sb.append(toFixedLength("avg=" + String.format("%1$.0f", avg), 10));
-
+        sb.append("\n");
         sb.append(toFixedLength(
                 "sd=" + String.format("%1$.2f", standardDeviation), 15));
-
+        sb.append("\n");
         sb.append(toFixedLength("name=" + name, 40));
+        sb.append("\n");
         sb.append(toFixedLength(control.getDes(), 30));
+        sb.append("\n");
         sb.append(toFixedLength("des=" + des, 50));
+        sb.append("\n");
 
         if (extraPara != null) {
             for (Object t : extraPara)
                 sb.append("extraPara=" + t + "\t");
+            sb.append("\n");
         }
 
         sb.append(fullResult());

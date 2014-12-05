@@ -15,6 +15,9 @@ import allen.perftest.testcase.Empty;
 import allen.perftest.testcase.bytescopy.BytesCopyFactory;
 import allen.perftest.testcase.cache.CacheFactory;
 import allen.perftest.testcase.exception.ExceptionFactory;
+import allen.perftest.testcase.findEnum.BizSubTypeCase1;
+import allen.perftest.testcase.findEnum.BizSubTypeCase2;
+import allen.perftest.testcase.findEnum.BizSubTypeCase_Map;
 import allen.perftest.testcase.list.ListFactory;
 import allen.perftest.testcase.math.MathFactory;
 import allen.perftest.testcase.memory.MMFactory;
@@ -27,10 +30,14 @@ public class PerfTestHarness {
     private static List<PerfTestCase> init() {
 
         List<PerfTestCase> list = new ArrayList<PerfTestCase>();
-        //
+
+        //        list.add(new StringBuilderEncoderWraper());
+        list.add(new BizSubTypeCase1());
+//                list.add(new BizSubTypeCase2());
+//                list.add(new BizSubTypeCase_Map());
         //        list.add(new CreateException());
-        //
-        //        list.add(new CreateObject());
+
+        //                list.add(new CreateObject());
         //
         //        list.add(new Empty());
         //
@@ -50,7 +57,7 @@ public class PerfTestHarness {
 
         //        list.addAll(new StringFactory().getPerfTestCaseList());
 
-        list.addAll(new TimeFactory().getPerfTestCaseList());
+        //        list.addAll(new TimeFactory().getPerfTestCaseList());
 
         return list;
 
@@ -73,6 +80,7 @@ public class PerfTestHarness {
                 + c.getDes() + " timeDiff=" + timeDiff);
 
         c.adjust(timeDiff, loop);
+
         System.out.println("[allen] after adjust " + testCase.name() + " "
                 + c.getDes());
     }
@@ -86,11 +94,24 @@ public class PerfTestHarness {
 
             Control c = testCase.getControl();
 
+            //默认跑10000次，触发JIT。
+            System.out.println();
+            System.out
+                    .println("-------------------WarmupLoop 1----------------------------------");
             warmup(testCase, c.getWarmupLoop());
+
+            System.out.println();
+            System.out
+                    .println("-------------------WarmupLoop 2----------------------------------");
             warmup(testCase, c.getCurLoop());
 
-            while (true) {
+            //等待JIT完成。
+            pause(1000);
 
+            while (true) {
+                System.out.println();
+                System.out
+                        .println("-----------------------------------------------------");
                 System.out.println("[allen]  running " + testCase.name() + " "
                         + c.getDes());
 
@@ -136,10 +157,15 @@ public class PerfTestHarness {
             }
         }
 
-        System.out.println("---------------------");
+        System.out
+                .println("-----------------------------------------------------");
+        System.out.println();
 
         Collections.sort(resultList, new PerftestResultNameComparator());
         for (PerftestResult result : resultList) {
+            System.out.println();
+            System.out
+                    .println("-----------------------------------------------------");
             System.out.println(result);
         }
     }
@@ -155,6 +181,14 @@ public class PerfTestHarness {
         System.gc();
         try {
             Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void pause(long ms) {
+        try {
+            Thread.sleep(ms);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
