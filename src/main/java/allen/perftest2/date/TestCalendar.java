@@ -2,7 +2,7 @@ package allen.perftest2.date;
 
 import java.util.Calendar;
 
-public class TestDate {
+public class TestCalendar {
 
     public static void main(String[] args) throws Exception {
 

@@ -3,32 +3,42 @@ package allen.perftest;
 import allen.perftest.result.PerftestResult;
 
 public class Control {
+    private final static long   Default_Loop_Max_Limit   = Long.MAX_VALUE;
+    private final static int    Adjust_Max_Limit         = 5;
 
-    private final static long Default_Loop_Max_Limit = Long.MAX_VALUE;
-    private final static int  Adjust_Max_Limit       = 5;
+    /**
+     * 执行一个suite的最短时间。
+     * 
+     * <pre>
+     * 1s。
+     * </pre>
+     * */
+    private final static double Min_RunTime_For_Suite    = 1000000000D;
+    /**
+     * 执行一个suite的期望时间。
+     * 
+     * <pre>
+     * 2s。
+     * </pre>
+     * */
+    private final static double Expect_RunTime_For_Suite = 2000000000D;
 
     //trigger JIT
-    protected long            warmupLoop             = 10000;
+    protected long              warmupLoop               = 10000;
 
-    protected long            curLoop;
+    protected long              curLoop;
 
-    protected int             suiteCount             = 5;
+    protected int               suiteCount               = 5;
 
-    protected boolean         needGcBeforeRun        = false;
+    protected boolean           needGcBeforeRun          = false;
 
-    private int               adjustCounter;
+    private int                 adjustCounter;
 
-    public boolean isNeedGcBeforeRun() {
-        return needGcBeforeRun;
+    public boolean isSatisfiedForResult(PerftestResult perftestResult) {
+        return perftestResult.avg * curLoop >= Min_RunTime_For_Suite;
     }
 
-    public boolean isSatisfied(PerftestResult perftestResult) {
-        //        return true;
-        //时间在1s以上。
-        return perftestResult.avg * curLoop >= 1000000000D;
-    }
-
-    public void adjust(PerftestResult perftestResult) {
+    public void adjustForResult(PerftestResult perftestResult) {
         curLoop = curLoop + curLoop;
         adjustCounter++;
         if (adjustCounter > Adjust_Max_Limit) {
@@ -46,7 +56,7 @@ public class Control {
     public void adjust(double consumeTime, long loop) {
         double avg = consumeTime / loop;
 
-        double expectLoop = 2000000000D / avg;
+        double expectLoop = Expect_RunTime_For_Suite / avg;
         if (expectLoop >= Default_Loop_Max_Limit) {
             throw new RuntimeException();
         } else {
@@ -68,6 +78,10 @@ public class Control {
 
     public long getWarmupLoop() {
         return warmupLoop;
+    }
+
+    public boolean isNeedGcBeforeRun() {
+        return needGcBeforeRun;
     }
 
     public Control() {

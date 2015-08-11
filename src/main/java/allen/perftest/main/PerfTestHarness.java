@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import allen.perf.math.MathUtil;
 import allen.perftest.Control;
 import allen.perftest.PerfTestCase;
 import allen.perftest.result.PerftestResult;
@@ -33,8 +32,8 @@ public class PerfTestHarness {
 
         //        list.add(new StringBuilderEncoderWraper());
         list.add(new BizSubTypeCase1());
-//                list.add(new BizSubTypeCase2());
-//                list.add(new BizSubTypeCase_Map());
+        list.add(new BizSubTypeCase2());
+        list.add(new BizSubTypeCase_Map());
         //        list.add(new CreateException());
 
         //                list.add(new CreateObject());
@@ -76,13 +75,13 @@ public class PerfTestHarness {
         long timeDiff = System.nanoTime() - start;
         //warm up
 
-        System.out.println("[allen] warm up " + testCase.name() + " "
+        System.out.println("[allen] warm up result " + testCase.name() + " "
                 + c.getDes() + " timeDiff=" + timeDiff);
 
         c.adjust(timeDiff, loop);
 
-        System.out.println("[allen] after adjust " + testCase.name() + " "
-                + c.getDes());
+        System.out.println("[allen] warm up after adjust " + testCase.name()
+                + " " + c.getDes());
     }
 
     public static void main(String[] args) throws Exception {
@@ -106,7 +105,7 @@ public class PerfTestHarness {
             warmup(testCase, c.getCurLoop());
 
             //µÈ´ýJITÍê³É¡£
-            pause(1000);
+            Util.pause(1000);
 
             while (true) {
                 System.out.println();
@@ -120,7 +119,7 @@ public class PerfTestHarness {
                 for (int i = 0; i < c.getSuiteCount(); i++) {
 
                     if (c.isNeedGcBeforeRun()) {
-                        gc();
+                        Util.gc();
                     }
 
                     testCase.beforeRunSuite();
@@ -143,17 +142,17 @@ public class PerfTestHarness {
                 result.control = c;
                 result.results = avgs;
 
-                result.avg = MathUtil.avg(avgs);
-                result.standardDeviation = MathUtil.standardDeviation(avgs);
+                result.avg = Util.avg(avgs);
+                result.standardDeviation = Util.standardDeviation(avgs);
 
-                if (c.isSatisfied(result)) {
+                if (c.isSatisfiedForResult(result)) {
                     resultList.add(result);
                     System.out.println("[allen] done " + testCase.name() + " "
                             + c.getDes());
                     break;
                 }
 
-                c.adjust(result);
+                c.adjustForResult(result);
             }
         }
 
@@ -170,27 +169,4 @@ public class PerfTestHarness {
         }
     }
 
-    public static void gc() {
-        System.gc();
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        System.gc();
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void pause(long ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

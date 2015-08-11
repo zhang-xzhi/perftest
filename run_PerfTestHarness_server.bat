@@ -19,8 +19,7 @@ java                                             ^
 -cp .\\target\\classes;./lib/commons-math3-3.3.jar allen.perftest.main.PerfTestHarness 
 pause
 
+# 可以把GC日志/编译日志禁止掉，这样，打印的结果更干净。
 
--Xcomp                                           ^
--XX:+ScavengeBeforeFullGC                        ^
--XX:-BackgroundCompilation                       ^
+
 
