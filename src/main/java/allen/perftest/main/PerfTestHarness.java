@@ -30,34 +30,25 @@ public class PerfTestHarness {
 
         List<PerfTestCase> list = new ArrayList<PerfTestCase>();
 
-        //        list.add(new StringBuilderEncoderWraper());
-        list.add(new BizSubTypeCase1());
-        list.add(new BizSubTypeCase2());
-        list.add(new BizSubTypeCase_Map());
         //        list.add(new CreateException());
-
-        //                list.add(new CreateObject());
-        //
+        //        list.add(new CreateObject());
         //        list.add(new Empty());
-        //
-        //        list.addAll(new BytesCopyFactory().getPerfTestCaseList());
-        //
         //        list.addAll(new CacheFactory().getPerfTestCaseList());
-        //
-        //        list.addAll(new ExceptionFactory().getPerfTestCaseList());
-        //
         //        list.addAll(new ListFactory().getPerfTestCaseList());
-        //
         //        list.addAll(new MathFactory().getPerfTestCaseList());
-        //
         //        list.addAll(new MMFactory().getPerfTestCaseList());
-        //
+
+        //已经测试出结果的。
+        //        list.addAll(new ExceptionFactory().getPerfTestCaseList());
         //        list.addAll(new ReflectionFactory().getPerfTestCaseList());
-
         //        list.addAll(new StringFactory().getPerfTestCaseList());
-
         //        list.addAll(new TimeFactory().getPerfTestCaseList());
+        //        list.addAll(new BytesCopyFactory().getPerfTestCaseList());
 
+        //测试枚举getEnumByCode。
+        //        list.add(new BizSubTypeCase1());
+        //        list.add(new BizSubTypeCase2());
+        //        list.add(new BizSubTypeCase_Map());
         return list;
 
     }
@@ -93,17 +84,18 @@ public class PerfTestHarness {
 
             Control c = testCase.getControl();
 
-            //默认跑10000次，触发JIT。
+            //预热1：默认跑10000次，触发JIT。，根据当前avg时间调整下次loop的次数。期望一个suite可以在2s左右。
+            //预热2：根据预热1计算的loop次数，重新跑一次，由于代码已经JIT过，理论上，本次run的时候avg会变小，根据当前avg时间调整下次loop的次数。期望一个suite可以在2s左右。
+
             System.out.println();
-            System.out
-                    .println("-------------------WarmupLoop 1----------------------------------");
+            System.out.println("---------WarmupLoop 1---------------------");
             warmup(testCase, c.getWarmupLoop());
+            //等待JIT完成。
+            Util.pause(1000);
 
             System.out.println();
-            System.out
-                    .println("-------------------WarmupLoop 2----------------------------------");
+            System.out.println("---------WarmupLoop 2---------------------");
             warmup(testCase, c.getCurLoop());
-
             //等待JIT完成。
             Util.pause(1000);
 

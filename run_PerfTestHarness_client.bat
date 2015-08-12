@@ -1,5 +1,5 @@
 java                                             ^
--server                                          ^
+-client                                          ^
 -XX:+PrintCompilation                            ^
 -Xms1024m                                        ^
 -Xmx1024m                                        ^

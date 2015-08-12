@@ -11,7 +11,7 @@ public class TestForTimer {
 
     public static void main(String[] args) throws Exception {
         LineNumberReader lnr = new LineNumberReader(new FileReader(
-                "TestForTimer.config"));
+                "data\\TestForTimer.config"));
         String line = null;
         System.out.println("thread\tloop\ttimeout(ns)\trealtimeout(ns)");
         while ((line = lnr.readLine()) != null) {
